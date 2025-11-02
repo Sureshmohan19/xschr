@@ -1,3 +1,4 @@
+# Dockerfile for XSchr - Testing in Linux environment
 # Build stage
 FROM golang:1.23 AS builder
 
@@ -15,16 +16,17 @@ COPY . .
 # Build the application
 RUN CGO_ENABLED=0 GOOS=linux go build -o /xschr ./cmd/xschr
 
-# Runtime stage
+# Runtime stage - Ubuntu for testing
 FROM ubuntu:22.04
 
-RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root/
 
 # Copy the binary from builder
 COPY --from=builder /xschr .
 
-EXPOSE 8080
-
+# Run the test
 CMD ["./xschr"]
