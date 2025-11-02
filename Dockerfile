@@ -1,18 +1,30 @@
-# Use a specific, stable version of Ubuntu as the base
+# Build stage
+FROM golang:1.23 AS builder
+
+WORKDIR /app
+
+# Copy go mod files
+COPY go.mod go.sum* ./
+
+# Download dependencies
+RUN go mod download
+
+# Copy source code
+COPY . .
+
+# Build the application
+RUN CGO_ENABLED=0 GOOS=linux go build -o /xschr ./cmd/xschr
+
+# Runtime stage
 FROM ubuntu:22.04
 
-# Avoid interactive prompts during package installation
-ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
 
-# Install all necessary development tools in a single layer
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    gdb \
-    git \
-    man-db \
-    vim \
-    && rm -rf /var/lib/apt/lists/*
+WORKDIR /root/
 
-# Set the default working directory for when the container starts
-WORKDIR /xschr
+# Copy the binary from builder
+COPY --from=builder /xschr .
 
+EXPOSE 8080
+
+CMD ["./xschr"]

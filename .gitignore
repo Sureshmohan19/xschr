@@ -1,20 +1,24 @@
-# Build artifacts
-build/
-bin/
-*.o
-*.a
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
 *.so
 *.dylib
-
-# Executables
 *.out
-*.exe
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.txt
+coverage.html
+
+# Go build artifacts
+bin/
+build/
+dist/
+vendor/
 
 # IDE and editor files
 .vscode/
@@ -24,6 +28,13 @@ bin/
 *~
 .DS_Store
 
-# Dependencies
-*.d
+# Air - live reload for Go apps (if used)
+tmp/
 
+# Environment variables
+.env
+.env.local
+
+# Binary name
+xschr
+xschr-*
