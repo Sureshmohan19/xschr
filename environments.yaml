@@ -1,0 +1,18 @@
+# XSchr Configuration
+config:
+  log_dir: logs_yaml_test
+  python_cmd: python3
+
+experiments:
+  - name: yaml_sanity_check
+    script: slp_train.py
+    runs:
+      # High learning rate
+      - args: --lr 0.05 --epochs 5
+      # Low learning rate
+      - args: --lr 0.005 --epochs 5
+
+  - name: heavy_input_test
+    script: slp_train.py
+    runs:
+      - args: --inputs 500 --epochs 3
