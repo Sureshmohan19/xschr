@@ -1,11 +1,11 @@
 import os
 import sys
 import json
-import yaml  # Requires: pip install PyYAML
+import yaml 
 
 def load_and_validate(config_path):
     """
-    Loads a JSON or YAML configuration file and validates the schema.
+    Loads a YAML configuration file and validates the schema.
     Returns: (config_data: dict, absolute_path: str)
     """
     abs_path = os.path.abspath(config_path)
@@ -20,16 +20,13 @@ def load_and_validate(config_path):
             if ext in ['.yaml', '.yml']:
                 # Safe load prevents arbitrary code execution in YAML
                 data = yaml.safe_load(f)
-            elif ext == '.json':
-                data = json.load(f)
             else:
-                # Default to YAML if unknown, or raise error?
                 # Let's try YAML, then fail.
                 try:
                     f.seek(0)
                     data = yaml.safe_load(f)
                 except:
-                    raise ValueError(f"Unsupported file format: {ext}. Please use .yaml or .json")
+                    raise ValueError(f"Unsupported file format: {ext}. Please use .yaml file")
                     
     except Exception as e:
         raise ValueError(f"Error parsing {ext} file: {e}")

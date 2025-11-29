@@ -27,7 +27,7 @@ def run_sequence(experiments, config_path, python_cmd, log_root, fail_fast=False
     if not dry_run:
         try:
             # Flush stdout to ensure prompt appears before input
-            sys.stdout.write("\nPress ENTER to launch 🚀 (or Ctrl+C to abort)...")
+            sys.stdout.write("\nPress ENTER to start the experiments (or Ctrl+C to abort)...")
             sys.stdout.flush()
             input()
             

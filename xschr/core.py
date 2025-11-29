@@ -1,3 +1,9 @@
+"""
+xschr.core
+
+core delegation of xschr package.
+"""
+
 import sys
 import os
 import time
@@ -19,7 +25,7 @@ def main():
 
     # 3. System Check (Skip if dry-run to reduce noise, or keep it if you prefer)
     if not args.dry_run:
-        try:
+        try: 
             print_system_status()
         except Exception:
             # Don't crash if nvidia-smi fails, just ignore
